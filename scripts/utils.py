@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-def import_lightcurve(filepath,drop_bad_points=True,return_type='astropy'):
+def import_lightcurve(filepath,drop_bad_points=True,return_type='astropy',return_meta_as_dict=False):
     """Importing a lightcurve given a FITS format file.
     
     Parameters: 
@@ -18,7 +18,7 @@ def import_lightcurve(filepath,drop_bad_points=True,return_type='astropy'):
     
     
     """
-    lc = fits.open('lightcurve.fits')
+    lc = fits.open(filepath)
 
     meta = lc[0].header
     data = lc[1].data
@@ -26,10 +26,14 @@ def import_lightcurve(filepath,drop_bad_points=True,return_type='astropy'):
         data = data[data['QUALITY'] == 0]
 
     return_types = ['astropy','pandas','pd']
-
+    lc.close()
     if return_type == 'pandas' or return_type == 'pd':
         data = Table(data).to_pandas()
-        return data, meta
+
+    if return_meta_as_dict:
+        meta = dict(meta)
+        
+    return data, meta
         
     return data, meta
 

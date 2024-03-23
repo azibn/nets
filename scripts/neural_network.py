@@ -9,7 +9,7 @@ from astropy.table import Table, Column
 
 """Script is a framework for a neural network."""
 
-def create_nn_model(layers=None, optimizer='adam', loss='binary_crossentropy', metrics=None, cadences=None):
+def model(layers=None, optimizer='adam', loss='binary_crossentropy', metrics=None, cadences=None):
     ## consider categorical_crossentropy for loss
     ## consider softmax for activation instead of sigmoid
     
@@ -40,16 +40,16 @@ def create_nn_model(layers=None, optimizer='adam', loss='binary_crossentropy', m
         filter1 = 16
         filter2 = 64
         dense = 32
-        dropout = 0.1
+        dropout = 0.2
 
-        model.add(tf.keras.layers.Conv1D(filters=filter1, kernel_size=7,
+        model.add(tf.keras.layers.LSTM(filters=filter1, kernel_size=7,
                                          activation='relu', padding='same',
                                          input_shape=(cadences, 1)))
-        model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
+        #model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
         model.add(tf.keras.layers.Dropout(dropout))
-        model.add(tf.keras.layers.Conv1D(filters=filter2, kernel_size=3,
+        model.add(tf.keras.layers.LSTM(filters=filter2, kernel_size=3,
                                          activation='relu', padding='same'))
-        model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
+        #model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
         model.add(tf.keras.layers.Dropout(dropout))
         
         model.add(tf.keras.layers.Flatten())
@@ -57,8 +57,8 @@ def create_nn_model(layers=None, optimizer='adam', loss='binary_crossentropy', m
         model.add(tf.keras.layers.Dropout(dropout))
         model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
     else:
-        for l in layers:
-            model.add(l)
+        for i in layers:
+            model.add(i)
 
     if metrics is None:
         model.compile(optimizer=optimizer,
@@ -71,7 +71,7 @@ def create_nn_model(layers=None, optimizer='adam', loss='binary_crossentropy', m
 
     return model
 
-def load_nn_model(model):
+def load(model):
     """
     Loads a pre-trained keras model.
 
@@ -88,7 +88,7 @@ def load_nn_model(model):
     model = keras.models.load_model(model)
     return model
 
-def train_nn_model(model, train_data, train_labels, val_data, val_labels, epochs=50, batch_size=64, shuffle=False):
+def train(model, train_data, train_labels, val_data, val_labels, epochs=50, batch_size=64, shuffle=False):
     """
     Trains the keras model.
 
@@ -120,7 +120,7 @@ def train_nn_model(model, train_data, train_labels, val_data, val_labels, epochs
                         validation_data=(val_data, val_labels))
     return history.history
 
-def save_nn_model(model, output_dir='neural-net/', model_fmt):
+def save(model, output_dir='neural-net/', model_fmt):
     """
     Saves the given model to output directory.
 
