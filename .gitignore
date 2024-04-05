@@ -1,6 +1,10 @@
 # directories
 stella/
 target_lists/
+stella-tests/
+data
+models/
 
 # files
 metadata_output.txt
+hlsp_everest_k2_llc_202093476-c00_kepler_v2.0_lc.fits

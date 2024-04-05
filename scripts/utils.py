@@ -27,13 +27,14 @@ def import_lightcurve(filepath,drop_bad_points=True,return_type='astropy',return
 
     return_types = ['astropy','pandas','pd']
     lc.close()
+
+    data = Table(data)
+    
     if return_type == 'pandas' or return_type == 'pd':
         data = Table(data).to_pandas()
 
     if return_meta_as_dict:
         meta = dict(meta)
-        
-    return data, meta
         
     return data, meta
 

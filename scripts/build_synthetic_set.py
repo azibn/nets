@@ -105,28 +105,28 @@ def save_lightcurve(data, lc_info, format='fits'):
             Format in which to save the data. Can be 'fits' for FITS files or 'npz' for NumPy arrays in .npz format.
             Default is 'fits'.
     """
-    # Save the data as a FITS file
-    if format == 'fits':
-        if isinstance(data, Table):
-            filename = f'K2_{lc_info['KEPLERID']}.fits'
-            data.write(filename, format='fits')
-        else:
-            raise ValueError("Data must be an Astropy Table for FITS files.")
-    # Convert the Astropy Table to a NumPy array and save as .npz format
-    elif format == 'npz':
-        if isinstance(data, Table):
-            filename = f'K2_{lc_info['KEPLERID']}.npz'
-            column_dict = {}
-            for col in data.dtype.names:
-                # Extract the column corresponding to the current field
-                column_data = data[col]
+    # # Save the data as a FITS file
+    # if format == 'fits':
+    #     if isinstance(data, Table):
+    #         filename = f'K2_{lc_info['KEPLERID']}.fits'
+    #         data.write(filename, format='fits')
+    #     else:
+    #         raise ValueError("Data must be an Astropy Table for FITS files.")
+    # # Convert the Astropy Table to a NumPy array and save as .npz format
+    # elif format == 'npz':
+    #     if isinstance(data, Table):
+    #         filename = f'K2_{lc_info['KEPLERID']}.npz'
+    #         column_dict = {}
+    #         for col in data.dtype.names:
+    #             # Extract the column corresponding to the current field
+    #             column_data = data[col]
                 
-                # Add the column data to the dictionary with the field name as the key
-                column_dict[col] = column_data
+    #             # Add the column data to the dictionary with the field name as the key
+    #             column_dict[col] = column_data
 
-            # Save the dictionary containing all columns as a single .npz file
-            np.savez(f'{lc_info['KEPLERID']}.npz', **column_dict)
-        else:
-            raise ValueError("Data must be an Astropy Table for .npz format.")
-    else:
-        raise ValueError("Unsupported format. Use 'fits' for FITS files or 'npz' for NumPy arrays.")
+    #         # Save the dictionary containing all columns as a single .npz file
+    #         np.savez(f'{lc_info['KEPLERID']}.npz', **column_dict)
+    #     else:
+    #         raise ValueError("Data must be an Astropy Table for .npz format.")
+    # else:
+    #     raise ValueError("Unsupported format. Use 'fits' for FITS files or 'npz' for NumPy arrays.")
