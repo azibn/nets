@@ -1,12 +1,9 @@
 # nets
 
-CNN-based architecture to hunt for exocomets.
+A CNN-based architecture to hunt for exocomets.
 
 ## Installation
 
-Install the environment using the `env.yml` file, which you can install via mamba/micromamba (recommended) or conda. This was tested on an Apple Silicon machine.
+Install the environment using the `env.yml` file. This file was tested on an Apple Silicon machine.
 
-```
-mamba env create -f envionment.yml
-```
-
+```mamba env create -f env.yml```
